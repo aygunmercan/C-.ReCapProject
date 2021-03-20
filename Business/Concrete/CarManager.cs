@@ -22,26 +22,45 @@ namespace Business.Concrete
             return _carDal.GetAll();
         }
 
-        public List<Car> GetById(int id)
-        {
-            return _carDal.GetById(id);
-        }
-
         public void Add(Car car)
         {
-            _carDal.Add(car);
+
+            if (car.DailyPrice>0 && car.Descriptions.Length>=2)
+            {
+                _carDal.Add(car);
+            }
+            else
+            {
+                Console.WriteLine("Araç eklenmedi...");
+            }
+
         }
 
-        public void Delete(Car car)
+        //public void Delete(Car car)
+        //{
+        //    _carDal.Delete(car);
+        //}
+
+        //public void Update(Car car)
+        //{
+        //    _carDal.Update(car);
+        //}
+
+        public List<Car> GetCarsByColorId(int id)
         {
-            _carDal.Delete(car);
+            return _carDal.GetAll(p => p.ColorId == id);
         }
 
-        public void Update(Car car)
+        public List<Car> GetCarsByBrandId(int id)
         {
-            _carDal.Update(car);
+            return _carDal.GetAll(p => p.BrandId == id);
         }
 
-   
+        public List<Car> GetByDailyPrice(double min, double max)
+        {
+            return _carDal.GetAll(p => p.DailyPrice >= min && p.DailyPrice <= max);
+        }
+
+
     }
 }
